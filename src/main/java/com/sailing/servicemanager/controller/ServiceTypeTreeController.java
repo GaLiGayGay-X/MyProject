@@ -40,7 +40,19 @@ public class ServiceTypeTreeController {
     public String goToTree(){
         return "servicebasetree/ServiceBaseTRee";
     }
-    
+    /**
+     * 
+     * getAllService[这里用一句话描述这个方法的作用]
+     * 创建人:  zhangkai
+     * 创建时间: 2017年11月20日 上午10:02:22
+     *
+     * @Title: getAllService
+     * @param searchKey
+     * @param enumId
+     * @param treeLayer
+     * @return
+     * @since  CodingExample　Ver(编码范例查看) 1.1
+     */
     @RequestMapping("getAllService")
     @ResponseBody
     public List<Map> getAllService(String searchKey, String enumId, String treeLayer){
