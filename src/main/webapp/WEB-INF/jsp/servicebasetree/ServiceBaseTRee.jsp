@@ -17,46 +17,157 @@
 	src="${ctx }/staticSource/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${ctx }/staticSource/js/global.js"></script>
 <link rel="stylesheet" href="${ctx }/staticSource/css/bootstrap.css">
-<link rel="stylesheet"
-	href="${ctx }/staticSource/css/zTreeStyle/zTreeStyle.css">
+<link rel="stylesheet" href="${ctx }/staticSource/css/metroStyle/metroStyle.css">
 <link rel="stylesheet" href="${ctx }/staticSource/css/easyui.css">
+<script type="text/javascript" src="${ctx }/staticSource/js/easyui-lang-zh_CN.js"></script>
 
 </head>
 <body>
 	<div class="row-fluid">
 		<div class="col-md-3" style="width: 15%">
-			<ul id="ztreeDemo" class="ztree"
-				style="height: 480px; font-size: 12px; padding-bottom: 30px; overflow: auto;"></ul>
+			<ul id="ztreeDemo" class="ztree" style="height: 480px; font-size: 12px; padding-bottom: 30px; overflow: auto;"></ul>
 		</div>
 		<div class="col-md-12" style="height: 480px; width: 85%">
 			<form class="form-horizontal form-bordered" action="#">
-				<form class="form-horizontal form-bordered" action="#">
-					<div class="form-body">
-						<div class="form-group">
-							<div class="col-md-12"
-								style="padding-left: 1px; margin-left: 15px;">
-								<div class="col-md-3" style="padding-left: 0px;">
-									<input type="text" placeholder="请输入服务资源编号或服务名称" id="searchKey"
-										class="form-control searchBarFom">
-								</div>
-								<div class="col-md-2">
-									<button class="btn btn-success rounded" type="button"
-										id="btn-4" onclick="ServiceBaseTree.query()">
-										<i class="fa fa-search"></i>查询
-									</button>
-									&nbsp;
-									<button id="btn-1" class="btn btn-primary rounded" type="reset">
-										<i class="fa fa-eraser"></i> 清空
-									</button>
-								</div>
+				<div class="form-body">
+					<div class="form-group">
+						<div class="col-md-12" style="padding-left: 1px; margin-left: 15px;">
+							<div class="col-md-3" style="padding-left: 0px;">
+								<input type="text" placeholder="请输入服务资源编号或服务名称" id="searchKey" class="form-control searchBarFom">
+							</div>
+							<div class="col-md-2">
+								<button class="btn btn-success rounded" type="button" id="btn-4" onclick="ServiceBaseTree.query()">
+									<i class="fa fa-search"></i>查询
+								</button>
+								&nbsp;
+								<button id="btn-1" class="btn btn-primary rounded" type="reset">
+									<i class="fa fa-eraser"></i> 清空
+								</button>
 							</div>
 						</div>
 					</div>
-				</form>
-				<table id="dataGrid" style="height: 600px;"></table>
+				</div>
+			</form>
+			<table id="dataGrid" style="height: 600px;"></table>
 		</div>
 	</div>
-
+	<!-- 服务详情  --start -->
+	<div id="serviceDetailModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" style="width: 678px; height: 425px; margin-top: 150px;">
+				<div class="modal-header" style="background-color: #204D74;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+					<h4 class="modal-title" id="myModalLabel" style="color: white;">服务详情</h4>
+				</div>
+				<div class="modal-body" style="margin-bottom: 70px;height: 250px;">
+				<table class="table table-bordered" id="baseInfoTab2" style="width: 100%;">
+					<tbody>
+						<tr>
+							<td colspan="6" style="text-align: left">基本信息</td>
+						</tr>
+						<tr>
+							<td style="width: 16%;background-color:#E8E8E8;" align="right">服务编号:</td>
+							<td style="width: 32%" colspan="2"><span id="serviceCode2"></span></td>
+							<td style="width: 16%;background-color:#E8E8E8;" align="right">服务名称:</td>
+							<td style="width: 32%" colspan="2"><span id="serviceName2"></span></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">服务类型:</td>
+							<td colspan="2"><span id="dicName2"></span></td>
+							<td style="background-color:#E8E8E8;" align="right">服务状态:</td>
+							<td colspan="2"><span id="serviceStatus2"></span></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">操作人:</td>
+							<td colspan="2"><span id="operatePerson2"></span></td>
+							<td style="background-color:#E8E8E8;" align="right">操作时间:</td>
+							<td colspan="2"><span id="operateTime2"></span></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">开发语言:</td>
+							<td colspan="2"><span id="devLanguage2"></span></td>
+							<td style="background-color:#E8E8E8;" align="right">业务条线:</td>
+							<td colspan="2"><span id="bizLine2"></span></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">专题:</td>
+							<td colspan="2"><span id="topicType2"></span></td>
+							<td style="background-color:#E8E8E8;" align="right">要素:</td>
+							<td colspan="2"><span id="keyElement2"></span></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">备注:</td>
+							<td colspan="6"><span id="remark"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer" style="padding-top: 5px;">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+			</div>
+			</div>
+		</div>
+	</div>
+	<!-- 服务详情  --end -->
+	<!-- 服务详修改 --start -->
+	<div id="serviceUpdateModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" style="width: 678px; height: 425px; margin-top: 150px;">
+				<div class="modal-header" style="background-color: #204D74;">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: white;">&times;</button>
+					<h4 class="modal-title" id="myModalLabel" style="color: white;">服务修改</h4>
+				</div>
+				<div class="modal-body" style="margin-bottom: 70px;height: 250px;">
+				<table class="table table-bordered" id="baseInfoTab2" style="width: 100%;">
+					<tbody>
+						<tr>
+							<td colspan="6" style="text-align: left">基本信息</td>
+						</tr>
+						<tr>
+							<td style="width: 16%;background-color:#E8E8E8;" align="right">服务编号:</td>
+							<td style="width: 32%" colspan="2"><input id="serviceCode3" style="width: 100%;" /></td>
+							<td style="width: 16%;background-color:#E8E8E8;" align="right">服务名称:</td>
+							<td style="width: 32%" colspan="2"><input id="serviceName3" style="width: 100%;" /></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">服务类型:</td>
+							<td colspan="2"><input id="dicName3" style="width: 100%;" /></td>
+							<td style="background-color:#E8E8E8;" align="right">服务状态:</td>
+							<td colspan="2"><input id="serviceStatus3" style="width: 100%;" /></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">操作人:</td>
+							<td colspan="2"><input id="operatePerson3" style="width: 100%;" disabled="true"/></td>
+							<td style="background-color:#E8E8E8;" align="right">操作时间:</td>
+							<td colspan="2"><input id="operateTime3" style="width: 100%;" disabled="true"/></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">开发语言:</td>
+							<td colspan="2"><input id="devLanguage3" style="width: 100%;" /></td>
+							<td style="background-color:#E8E8E8;" align="right">业务条线:</td>
+							<td colspan="2"><input id="bizLine3" style="width: 100%;" /></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">专题:</td>
+							<td colspan="2"><input id="topicType3" style="width: 100%;" /></td>
+							<td style="background-color:#E8E8E8;" align="right">要素:</td>
+							<td colspan="2"><input id="keyElement3" style="width: 100%;" /></td>
+						</tr>
+						<tr>
+							<td style="background-color:#E8E8E8;" align="right">备注:</td>
+							<td colspan="6"><input id="remark3" style="width: 100%;"/></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer" style="padding-top: 5px;">
+				<button type="button" class="btn btn-success" onclick="">修改</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+			</div>
+			</div>
+		</div>
+	</div>
+	<!-- 服务修改  --end -->
 </body>
 <script type="text/javascript"
 	src="${ctx }/js/servicebasetree/ServiceBaseTree.js"></script>

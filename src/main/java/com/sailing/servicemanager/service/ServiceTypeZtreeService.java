@@ -39,5 +39,9 @@ public class ServiceTypeZtreeService {
         return serviceTypeTreeDao.getAllService(searchKey, enumId, treeLayer);
     }
     
+    public Map getServiceBaseById(String id){
+        return serviceTypeTreeDao.getServiceBaseById(id);
+    }
+    
 }
 

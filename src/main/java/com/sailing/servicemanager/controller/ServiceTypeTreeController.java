@@ -59,6 +59,11 @@ public class ServiceTypeTreeController {
         List<Map> findRootServiceType = serviceTypeZtreeService.getAllService(searchKey, enumId, treeLayer);
         return findRootServiceType;
     }
+    @RequestMapping("getServiceBaseById")
+    @ResponseBody
+    public Map getServiceBaseById(String id){
+        return serviceTypeZtreeService.getServiceBaseById(id);
+    }
     
 }
 

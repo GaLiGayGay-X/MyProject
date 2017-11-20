@@ -57,4 +57,16 @@ public class ServiceTypeTreeDao extends HibernateRepository<BdspServiceBase> {
         sb.append(" ORDER BY t.OPERATE_TIME DESC");
         return this.findBySql(sb.toString(), QueryResultTransformer.ALIAS_TO_ENTITY_MAP_CAMEL_CASE, Map.class, list.toArray());
     }
+    
+    public Map getServiceBaseById(String id){
+        String sql = "SELECT t.SERVICE_CODE, t.SERVICE_NAME, t.SI_CODE, t3.DIC_NAME, t.SERVICE_STATUS, t.REMARK, t.OPERATE_PERSON, t.OPERATE_TIME, "+
+                    "(SELECT DIC_NAME FROM bdsp_conf_data_dictionary t1 WHERE t.DEV_LANGUAGE = t1.ID) as DEV_LANGUAGE, "+
+                    "(SELECT DIC_NAME FROM bdsp_conf_data_dictionary t1 WHERE t.BIZ_LINE = t1.ID ) as BIZ_LINE, "+
+                    "(SELECT DIC_NAME FROM bdsp_conf_data_dictionary t1 WHERE t.TOPIC_TYPE = t1.ID ) as TOPIC_TYPE, "+
+                    "(SELECT DIC_NAME FROM bdsp_conf_data_dictionary t1 WHERE t.KEY_ELEMENT = t1.ID ) as KEY_ELEMENT "+
+                    "FROM bdsp_service_base t, bdsp_service_enum_relation t4, bdsp_conf_enum_type t2, bdsp_conf_data_dictionary t3 "+
+                    "WHERE t.SERVICE_ID = t4.SERVICE_ID AND t2.ID = t4.ENUM_ID AND t3.ID = t4.DIC_ID AND t.SERVICE_ID =?";
+        List<Map> findBySql = this.findBySql(sql.toString(), QueryResultTransformer.ALIAS_TO_ENTITY_MAP_CAMEL_CASE, Map.class, id);
+        return findBySql.get(0);
+    }
 }
