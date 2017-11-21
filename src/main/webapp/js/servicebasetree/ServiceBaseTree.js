@@ -6,7 +6,10 @@ var ServiceBaseTree = function() {
 		init : function() {
 			this.treeInit();
 			this.initGrid();
+			//this.validateForm();
 		},
+		
+		//*********************     服务分类树 --START   *************************
 		treeInit : function() {
 			var zNodes = [];
 			var setting = {
@@ -41,8 +44,9 @@ var ServiceBaseTree = function() {
 			};
 			$.fn.zTree.init($("#ztreeDemo"), setting, zNodes);
 		},
+		//*********************     服务分类树--END   ****************************
 		
-		
+		//*********************     服务table--START   *************************
 		initGrid : function(id, name, layer) {
 			function famt(value, row, index) {
 				if (value != undefined) {
@@ -119,6 +123,9 @@ var ServiceBaseTree = function() {
 
 							});
 		},
+		//*********************     服务table--END   *************************
+		
+		//*********************     服务查询 --START   *************************
 		query : function(){
 			var params = {};
 			params.searchKey = $("#searchKey").val();
@@ -126,7 +133,9 @@ var ServiceBaseTree = function() {
 			params.treeLayer = treeLayer2;
 			$("#dataGrid").datagrid("load",params);
 		},
+		//*********************     服务查询 --END   ***************************
 		
+		//*********************     服务详情 --START   *************************
 		serviceDetailShow : function(serviceId){
 			$("#serviceDetailModal").modal("show");
 			$.ajax({
@@ -152,6 +161,9 @@ var ServiceBaseTree = function() {
 				}
 			});
 		},
+		//*********************     服务详情 --END   ***************************
+		
+		//*********************     服务修改 --START   *************************
 		updateServiceBaseModal : function(serviceId){
 			
 			$.ajax({
@@ -164,7 +176,11 @@ var ServiceBaseTree = function() {
 					$("#serviceCode3").val(data.serviceCode);
 					$("#serviceName3").val(data.serviceName);
 					$("#dicName3").val(data.dicName);
-					$("#serviceStatus3").val(data.serviceStatus);
+					if (data.serviceStatus == 1) {
+						$("#serviceStatus3").val("注册");
+					} else if (data.serviceStatus == 2) {
+						$("#serviceStatus3").val("发布");
+					}
 					$("#operatePerson3").val(data.operatePerson);
 					$("#operateTime3").val(data.operateTime);
 					$("#devLanguage3").val(data.devLanguage);
@@ -172,12 +188,47 @@ var ServiceBaseTree = function() {
 					$("#topicType3").val(data.topicType);
 					$("#keyElement3").val(data.keyElement);
 					$("#remark3").val(data.remark);
+					ServiceBaseTree.validateForm();
 				},
 				error :function(data){
 					alert("请求错误......");
 				}
 			});
-		}
+		},
+		//*********************     服务修改 --END   *****************************
+		
+		//*********************     服务修改校验--START   *************************
+		validateForm : function() {
+
+			$("#serviceUpdateForm").validate({
+				submitHandler : function(form) {
+					alert("提交表单");
+					form.submit();
+				},
+				rules : {
+					serviceCode3 : {
+						required : true,
+						rangelength : [ 3, 15 ]
+					},
+					serviceName3 : {
+						required : true,
+						rangelength : [ 3, 15 ]
+					}
+				},
+				messages : {
+					serviceCode3 : {
+						required : "请输入编号",
+						rangelength : "长度介于3-15之间"
+					},
+					serviceName3 : {
+						required : "请输入服务名称",
+						rangelength : "长度介于3-15之间"
+					}
+				}
+			});
+		},
+		//*********************     服务修改校验--END   *************************
+		
 	}
 }();
 ServiceBaseTree.init();
