@@ -136,9 +136,7 @@
 								<tr>
 									<td style="background-color: #E8E8E8;" align="right">服务类型:</td>
 									<td colspan="2">
-										<select id="dicName3" name="dicName3" class="form-control">
-												<option value="1">java</option>
-												<option value="2">c++</option>
+										<select id="dicName3" class="form-control">
 										</select>
 									</td>
 									<td style="background-color: #E8E8E8;" align="right">服务状态:</td>
@@ -156,15 +154,11 @@
 									<td style="background-color: #E8E8E8;" align="right">开发语言:</td>
 									<td colspan="2">
 										<select id="devLanguage3" name="devLanguage3" class="form-control">
-												<option value="JAVA语言">JAVA语言</option>
-												<option value="C语言">C语言</option>
 										</select>
 									</td>
 									<td style="background-color: #E8E8E8;" align="right">业务条线:</td>
 									<td colspan="2">
 										<select id="bizLine3" name="bizLine3" class="form-control">
-												<option value="1">java</option>
-												<option value="2">c++</option>
 										</select>
 									</td>
 								</tr>
@@ -172,15 +166,11 @@
 									<td style="background-color: #E8E8E8;" align="right">专题:</td>
 									<td colspan="2">
 										<select id="topicType3" name="topicType3" class="form-control">
-												<option value="1">java</option>
-												<option value="2">c++</option>
 										</select>
 									</td>
 									<td style="background-color: #E8E8E8;" align="right">要素:</td>
 									<td colspan="2">
 										<select id="keyElement3" name="keyElement3" class="form-control">
-												<option value="1">java</option>
-												<option value="2">c++</option>
 										</select>
 									</td>
 								</tr>

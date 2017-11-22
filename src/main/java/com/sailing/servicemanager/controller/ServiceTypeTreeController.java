@@ -59,11 +59,47 @@ public class ServiceTypeTreeController {
         List<Map> findRootServiceType = serviceTypeZtreeService.getAllService(searchKey, enumId, treeLayer);
         return findRootServiceType;
     }
-    @RequestMapping("getServiceBaseById")
+    @RequestMapping("getServiceBaseForDetailById")
     @ResponseBody
-    public Map getServiceBaseById(String id){
-        return serviceTypeZtreeService.getServiceBaseById(id);
+    public Map getServiceBaseForDetailById(String id){
+        return serviceTypeZtreeService.getServiceBaseForDetailById(id);
     }
+    
+    @RequestMapping("getServiceBaseForUpdateById")
+    @ResponseBody
+    public Map getServiceBaseForUpdateById(String id){
+        return serviceTypeZtreeService.getServiceBaseForUpdateById(id);
+    }
+    
+    @RequestMapping("getServiceType")
+    @ResponseBody
+    public List<Map> getServiceType(){
+        return serviceTypeZtreeService.getServiceType();
+     }
+     
+    @RequestMapping("getDevLanguage")
+    @ResponseBody
+     public List<Map> getDevLanguage(){
+         return serviceTypeZtreeService.getDevLanguage();
+     }
+     
+    @RequestMapping("getBizLine")
+    @ResponseBody
+     public List<Map> getBizLine(){
+         return serviceTypeZtreeService.getBizLine();
+     }
+     
+    @RequestMapping("getTopicType")
+    @ResponseBody
+     public List<Map> getTopicType(){
+         return serviceTypeZtreeService.getTopicType();
+     }
+     
+    @RequestMapping("getKeyElement")
+    @ResponseBody
+     public List<Map> getKeyElement(){
+         return serviceTypeZtreeService.getKeyElement();
+     }
     
 }
 

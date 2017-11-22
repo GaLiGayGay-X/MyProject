@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sailing.sdp.orm.hibernate.transformers.QueryResultTransformer;
 import com.sailing.servicemanager.dao.ServiceTypeTreeDao;
 import com.sailing.servicemanager.entity.BdspServiceBase;
 
@@ -39,8 +40,32 @@ public class ServiceTypeZtreeService {
         return serviceTypeTreeDao.getAllService(searchKey, enumId, treeLayer);
     }
     
-    public Map getServiceBaseById(String id){
-        return serviceTypeTreeDao.getServiceBaseById(id);
+    public Map getServiceBaseForDetailById(String id){
+        return serviceTypeTreeDao.getServiceBaseForDetailById(id);
+    }
+    
+    public Map getServiceBaseForUpdateById(String id){
+        return serviceTypeTreeDao.getServiceBaseForUpdateById(id);
+    }
+    
+    public List<Map> getServiceType(){
+       return serviceTypeTreeDao.getServiceType();
+    }
+    
+    public List<Map> getDevLanguage(){
+        return serviceTypeTreeDao.getDevLanguage();
+    }
+    
+    public List<Map> getBizLine(){
+        return serviceTypeTreeDao.getBizLine();
+    }
+    
+    public List<Map> getTopicType(){
+        return serviceTypeTreeDao.getTopicType();
+    }
+    
+    public List<Map> getKeyElement(){
+        return serviceTypeTreeDao.getKeyElement();
     }
     
 }

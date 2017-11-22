@@ -6,7 +6,11 @@ var ServiceBaseTree = function() {
 		init : function() {
 			this.treeInit();
 			this.initGrid();
-			//this.validateForm();
+			this.getServiceType();
+			this.getDevLanguage();
+			this.getBizLine();
+			this.getTopicType();
+			this.getKeyElement();
 		},
 		
 		//*********************     服务分类树 --START   *************************
@@ -77,7 +81,18 @@ var ServiceBaseTree = function() {
 										{field : 'serviceName', title : '服务名称', align : 'center', halign : 'center', width : '15%', formatter : famt},
 										{field : 'dicname', title : '服务类型', align : 'center', halign : 'center', width : '15%', formatter : famt},
 										
-										{field : 'isEnable',title : '服务状态', align : 'center', width : '10%',formatter : famt},
+										{field : 'isEnable',title : '服务状态', align : 'center', width : '10%',formatter : function (value, row, index){
+											var str = '';
+											if (value !=undefined) {
+												if(row.isEnable == '0') {
+													str = '未启用';
+												} else if (row.isEnable == '1') {
+													str = '启用';
+												}
+											}
+											return str;
+										}
+										},
 										{field : 'serviceStatus', title : '服务流程状态', align : 'center', width : '10%',
 											formatter : function(value, row,
 													index) {
@@ -142,7 +157,7 @@ var ServiceBaseTree = function() {
 				type: "post",
 				dataType: "json",
 				data:{"id":serviceId},
-				url: contextPath+"/getServiceBaseById",
+				url: contextPath+"/getServiceBaseForDetailById",
 				success : function(data){
 					$("#serviceCode2").text(data.serviceCode);
 					$("#serviceName2").text(data.serviceName);
@@ -170,12 +185,12 @@ var ServiceBaseTree = function() {
 				type: "post",
 				dataType: "json",
 				data:{"id":serviceId},
-				url: contextPath+"/getServiceBaseById",
+				url: contextPath+"/getServiceBaseForUpdateById",
 				success : function(data){
 					$("#serviceUpdateModal").modal("show");
 					$("#serviceCode3").val(data.serviceCode);
 					$("#serviceName3").val(data.serviceName);
-					$("#dicName3").val(data.dicName);
+					$("#dicName3").val(data.serType);
 					if (data.serviceStatus == 1) {
 						$("#serviceStatus3").val("注册");
 					} else if (data.serviceStatus == 2) {
@@ -228,6 +243,82 @@ var ServiceBaseTree = function() {
 			});
 		},
 		//*********************     服务修改校验--END   *************************
+		
+		getServiceType : function(){
+			$.ajax({
+				type : "post",
+				dateType : "json",
+				url:contextPath+"/getServiceType",
+				success : function(data){
+						if (data) {
+							$.each(data, function(index, value){
+								$("#dicName3").append("<option style='width: 100' value='"+value.id+"'>"+value.serviceType+"</option>");
+							});
+						}
+				}
+			});
+		},
+		
+		getDevLanguage : function(){
+			$.ajax({
+				type : "post",
+				dateType : "json",
+				url : contextPath+"/getDevLanguage",
+				success : function(data){
+					if (data) {
+						$.each(data, function(index, value){
+							$("#devLanguage3").append("<option style='width: 100' value='"+value.id+"'>"+value.devLanguage+"</option>");
+						});
+					}
+				}
+			});
+		},
+		
+		getBizLine : function(){
+			$.ajax({
+				type : "post",
+				dateType : "json",
+				url : contextPath+"/getBizLine",
+				success : function(data){
+					if (data) {
+						$.each(data, function(index, value){
+							$("#bizLine3").append("<option style='width: 100' value='"+value.id+"'>"+value.bizLine+"</option>");
+						});
+					}
+				}
+			});
+		},
+		
+		getTopicType : function(){
+			$.ajax({
+				type : "post",
+				dateType : "json",
+				url : contextPath+"/getTopicType",
+				success : function(data){
+					if (data) {
+						$.each(data, function(index, value){
+							$("#topicType3").append("<option style='width: 100' value='"+value.id+"'>"+value.topicType+"</option>");
+						});
+					}
+				}
+			});
+		},
+		
+		getKeyElement : function(){
+			$.ajax({
+				type : "post",
+				dateType : "json",
+				url : contextPath+"/getKeyElement",
+				success : function(data){
+					if (data) {
+						$.each(data, function(index, value){
+							$("#keyElement3").append("<option style='width: 100' value='"+value.id+"'>"+value.keyElement+"</option>");
+						});
+					}
+				}
+			});
+		},
+		
 		
 	}
 }();
