@@ -101,4 +101,21 @@ public class ServiceTypeTreeDao extends HibernateRepository<BdspServiceBase> {
         String sql = "SELECT t.ID,t.DIC_NAME as KEY_ELEMENT FROM bdsp_conf_data_dictionary t WHERE t.ENUM_TYPE_ID = '2c94a48a5f957861015f9581ecff0001'";
         return this.findBySql(sql.toString(), QueryResultTransformer.ALIAS_TO_ENTITY_MAP_CAMEL_CASE, Map.class);
     }
+    
+    public Boolean checkNameExist(String serviceCode){
+        String sql = "SELECT t.* FROM bdsp_service_base t WHERE t.SERVICE_CODE = ?";
+        List<BdspServiceBase> findBySql = this.findBySql(sql.toString(), QueryResultTransformer.ALIAS_TO_BEAN, BdspServiceBase.class, serviceCode);
+        if (findBySql.size() == 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+    
+    public BdspServiceBase updateServiceBase(String serviceId3, String serviceCode3, String serviceName3, 
+            String devLanguage3, String bizLine3, String topicType3, String keyElement3, String remark3){
+        //String sql = "UPDATE bdsp_service_base t SET t.SERVICE_CODE = ?, t.SERVICE_NAME= ?, t.SERVICE_NAME = ?, t.DEV_LANGUAGE = ?, t.BIZ_LINE =?, t.TOPIC_TYPE = ?, t.KEY_ELEMENT = ?, t.REMARK = ? WHERE t.SERVICE_ID = ?";
+        
+        return null;
+    }
 }

@@ -100,6 +100,17 @@ public class ServiceTypeTreeController {
      public List<Map> getKeyElement(){
          return serviceTypeZtreeService.getKeyElement();
      }
+    @RequestMapping("checkNameExist")
+    @ResponseBody
+    public Boolean checkNameExist(String serviceCode){
+        return serviceTypeZtreeService.checkNameExist(serviceCode);
+    }
+    @RequestMapping("updateServiceBase")
+    @ResponseBody
+    public BdspServiceBase updateServiceBase(String serviceId3, String serviceCode3, String serviceName3, 
+            String devLanguage3, String bizLine3, String topicType3, String keyElement3, String remark3){
+        return updateServiceBase(serviceId3, serviceCode3, serviceName3, devLanguage3, bizLine3, topicType3, keyElement3, remark3);
+    }
     
 }
 

@@ -123,13 +123,17 @@
 					<div class="modal-body" style="height: 380px;">
 						<table class="table table-bordered" id="baseInfoTab2" style="width: 100%;">
 							<tbody>
+							
 								<tr>
 									<td colspan="6" style="text-align: left">基本信息</td>
 								</tr>
 								<tr>
-
+									
 									<td style="width: 16%; background-color: #E8E8E8;" align="right">服务编号:</td>
-									<td style="width: 32%" colspan="2"><input id="serviceCode3" name="serviceCode3" class="form-control" /></td>
+									<td style="width: 32%" colspan="2">
+									<input id="serviceId3" name="serviceId3" type="hidden"></input>
+									<input id="serviceCode3" name="serviceCode3" class="form-control" />
+									</td>
 									<td style="width: 16%; background-color: #E8E8E8;" align="right">服务名称:</td>
 									<td style="width: 32%" colspan="2"><input id="serviceName3" name="serviceName3" class="form-control" /></td>
 								</tr>
@@ -176,14 +180,14 @@
 								</tr>
 								<tr>
 									<td style="background-color: #E8E8E8;" align="right">备注:</td>
-									<td colspan="6"><input id="remark3" class="form-control" /></td>
+									<td colspan="6"><input id="remark3" name="remark3" class="form-control" /></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="modal-footer" style="margin-top: 30px;">
 						<button class="btn btn-success" type="submit">修改</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+						<button type="button" id="btn-close" class="btn btn-danger" data-dismiss="modal">关闭</button>
 					</div>
 				</form>
 			</div>

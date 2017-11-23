@@ -68,5 +68,14 @@ public class ServiceTypeZtreeService {
         return serviceTypeTreeDao.getKeyElement();
     }
     
+    public Boolean checkNameExist(String serviceCode){
+        return serviceTypeTreeDao.checkNameExist(serviceCode);
+    }
+    
+    @Transactional(readOnly=false)
+    public BdspServiceBase updateServiceBase(String serviceId3, String serviceCode3, String serviceName3, 
+            String devLanguage3, String bizLine3, String topicType3, String keyElement3, String remark3){
+        return serviceTypeTreeDao.updateServiceBase(serviceId3, serviceCode3, serviceName3, devLanguage3, bizLine3, topicType3, keyElement3, remark3);
+    }
 }
 

@@ -2,6 +2,7 @@ var ServiceBaseTree = function() {
 	var contextPath = UI.handleBaseURL();
 	var treeLayer2 = null;
 	var treeId = null;
+	var oldName = null;
 	return {
 		init : function() {
 			this.treeInit();
@@ -11,6 +12,7 @@ var ServiceBaseTree = function() {
 			this.getBizLine();
 			this.getTopicType();
 			this.getKeyElement();
+			this.validateForm();
 		},
 		
 		//*********************     服务分类树 --START   *************************
@@ -116,7 +118,7 @@ var ServiceBaseTree = function() {
 												str += '<span class="btn_ico_css" title="详情" onclick="ServiceBaseTree.serviceDetailShow(\''
 														+ row.serviceId
 														+ '\')"><i  class="glyphicon glyphicon-th-list"></i></span>&nbsp;&nbsp;';
-												str += '<span class="btn_ico_css" title="修改" onclick="ServiceBaseTree.updateServiceBaseModal(\''
+												str += '<span class="btn_ico_css" title="修改" onclick="ServiceBaseTree.showServiceBaseModal(\''
 														+ row.serviceId
 														+ '\');"><i  class="glyphicon glyphicon-cog"></i></span>&nbsp;&nbsp;';
 
@@ -179,15 +181,28 @@ var ServiceBaseTree = function() {
 		//*********************     服务详情 --END   ***************************
 		
 		//*********************     服务修改 --START   *************************
-		updateServiceBaseModal : function(serviceId){
+		
+		showServiceBaseModal : function(serviceId){
+			$("#serviceUpdateModal").modal("show");
 			
+			//清除掉校验内容及样式**********************************
+			$("#serviceCode3-error").text('');
+			$("#serviceCode3").removeClass('error');
+			$("#serviceName3-error").text('');
+			$("#serviceName3").removeClass('error');
+			
+			//发起请求填充表单************************************
+			ServiceBaseTree.updateServiceDetailBaseModal(serviceId);
+		},
+		
+		updateServiceDetailBaseModal : function(serviceId){
 			$.ajax({
 				type: "post",
 				dataType: "json",
 				data:{"id":serviceId},
 				url: contextPath+"/getServiceBaseForUpdateById",
 				success : function(data){
-					$("#serviceUpdateModal").modal("show");
+					$("#serviceId3").val(data.serviceId);
 					$("#serviceCode3").val(data.serviceCode);
 					$("#serviceName3").val(data.serviceName);
 					$("#dicName3").val(data.serType);
@@ -203,7 +218,7 @@ var ServiceBaseTree = function() {
 					$("#topicType3").val(data.topicType);
 					$("#keyElement3").val(data.keyElement);
 					$("#remark3").val(data.remark);
-					ServiceBaseTree.validateForm();
+					oldName = data.serviceCode;
 				},
 				error :function(data){
 					alert("请求错误......");
@@ -214,16 +229,56 @@ var ServiceBaseTree = function() {
 		
 		//*********************     服务修改校验--START   *************************
 		validateForm : function() {
+			
+			$.validator.addMethod("isNull", function(value, element){
+				var len = value.length;
+				if (len == 0) {
+					return false;
+				} else {
+					return true;
+				}
+			}, "请输入服务编号");
+			
+			$.validator.addMethod("checkNameExist", function(value, element){
+				var flag = null;
+				if(value.trim() != oldName.trim()){//避免用户未修改造成name已存在校验
+					$.ajax({
+						type : "post",
+						async : false,
+						data : {"serviceCode":value},
+						url : contextPath+"/checkNameExist",
+						success : function(data){
+							if (data == true) {
+								flag = true;
+							} else if (data == false) {
+								flag = false;
+							}
+						}
+					});
+				} else if(value.trim() == oldName.trim()) {
+					flag = true;
+				}
+				return flag;//注意将返回值写在ajax外面。否则返回值不起作用
+			},"该服务编号已存在");
 
 			$("#serviceUpdateForm").validate({
+				//debug : true,
 				submitHandler : function(form) {
 					alert("提交表单");
-					form.submit();
+					$.ajax({
+						type : "post",
+						dataType : "json",
+						data:$("#serviceUpdateForm").serialize(),
+						url : contextPath+"/updateServiceBase",
+						success : function(data){
+							alert("success");
+						}
+					});
 				},
 				rules : {
 					serviceCode3 : {
-						required : true,
-						rangelength : [ 3, 15 ]
+						isNull : true,
+						checkNameExist : true
 					},
 					serviceName3 : {
 						required : true,
@@ -231,16 +286,13 @@ var ServiceBaseTree = function() {
 					}
 				},
 				messages : {
-					serviceCode3 : {
-						required : "请输入编号",
-						rangelength : "长度介于3-15之间"
-					},
 					serviceName3 : {
 						required : "请输入服务名称",
 						rangelength : "长度介于3-15之间"
 					}
 				}
 			});
+			validator.resetForm();
 		},
 		//*********************     服务修改校验--END   *************************
 		
